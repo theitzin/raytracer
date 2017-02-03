@@ -1,0 +1,46 @@
+#IncludeRegexLine: ^[ 	]*#[ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/thomas/projects/raytracer/handler.hpp
+GL/glut.h
+-
+cmath
+-
+world.hpp
+/home/thomas/projects/raytracer/world.hpp
+
+/home/thomas/projects/raytracer/main.cpp
+GL/glut.h
+-
+handler.hpp
+/home/thomas/projects/raytracer/handler.hpp
+
+/home/thomas/projects/raytracer/ray.hpp
+cmath
+-
+vec3.hpp
+/home/thomas/projects/raytracer/vec3.hpp
+world.hpp
+/home/thomas/projects/raytracer/world.hpp
+
+/home/thomas/projects/raytracer/vec3.hpp
+iostream
+-
+cmath
+-
+
+/home/thomas/projects/raytracer/world.hpp
+vector
+-
+cmath
+-
+vec3.hpp
+/home/thomas/projects/raytracer/vec3.hpp
+ray.hpp
+/home/thomas/projects/raytracer/ray.hpp
+
