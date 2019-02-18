@@ -32,20 +32,32 @@ public:
 	bool finished() const { return done; }
 	void draw() const { 
 
-		glEnable(GL_TEXTURE_2D);
-		glBegin(GL_QUADS);
-		glTexCoord2i(0, 0);
-		glVertex2i(0, 0);
-		glTexCoord2i(1, 0);
-		glVertex2i(win_width, 0);
-		glTexCoord2i(1, 1);
-		glVertex2i(win_width, win_height);
-		glTexCoord2i(0, 1);
-		glVertex2i(0, win_height);
-		glEnd();
-		glFlush();
-		glDisable(GL_TEXTURE_2D);
+		glClearColor(0, 0, 0, 0);
+	    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
+	    glMatrixMode(GL_PROJECTION);
+	    glLoadIdentity();
+	    glOrtho(0.0, 1.0, 0.0, 1.0, 0.0, 1.0);
+
+	    glMatrixMode(GL_MODELVIEW);
+	    glLoadIdentity();
+
+	    glColor3f(1, 1, 1);
+
+	    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, win_pow2, win_pow2, 0, GL_RGB, GL_FLOAT, texture);
+
+	    glBegin(GL_QUADS);
+	    glTexCoord2f(0, 0);
+	    glVertex2f(0, 0);
+	    glTexCoord2f(1, 0);
+	    glVertex2f(1, 0);
+	    glTexCoord2f(1, 1);
+	    glVertex2f(1, 1);
+	    glTexCoord2f(0, 1);
+	    glVertex2f(0, 1);
+	    glEnd();
+
+	    glutSwapBuffers();
 	}
 	void setFinishedState(bool state) { done = state; }
 	void updateWindowSize(int width, int height) {
@@ -58,30 +70,14 @@ public:
 		while (win_pow2 < win_width || win_pow2 < win_height)
 			win_pow2 *= 2;
 
-		glMatrixMode(GL_PROJECTION); 
-    	glLoadIdentity();
-    	gluOrtho2D(0.0, win_width, 0.0, win_height);
-
 		texture = new float[win_pow2 * win_pow2 * 3];
 
-		//glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
-		glGenTextures(1, &textureID);
-		glBindTexture(GL_TEXTURE_2D, textureID);
-		//glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_BASE_LEVEL, 0);
-		//glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAX_LEVEL, 0);
- 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-		//glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-		glTexSubImage2D(
-			GL_TEXTURE_2D, 
-			0, 
-			GL_RGB32F, 
-			win_pow2, 
-			win_pow2, 
-			0, 
-			GL_RGB, 
-			GL_FLOAT, 
-			texture);
-
+		glEnable(GL_TEXTURE_2D);
+	    glGenTextures(1, &textureID);
+	    glBindTexture(GL_TEXTURE_2D, textureID);
+	    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, win_pow2, win_pow2, 0, GL_RGB, GL_FLOAT, texture);
+	    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+	    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 	}
 	virtual void updateWindowContent() = 0;
 	virtual void drawNext() = 0;
@@ -162,6 +158,7 @@ public:
 				texture[index + 2] = color.b;
 			}
 		}
+
 	}
 };
 
@@ -180,8 +177,8 @@ public:
 	Handler() {
 
 		batch_size = 1000;
-		window_width = 1500;
-		window_height = 1000;
+		window_width = 1024;
+		window_height = 1024;
 
 		Vec3<float> origin(-14.0f, 40.0f, -40.0f);
 		float rotationHorizontal = 0.68f;

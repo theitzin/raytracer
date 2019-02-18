@@ -1,5 +1,6 @@
 #include <GL/glut.h>
 #include "handler.hpp"
+#include <iostream>
 
 Handler handler;
 int mouseLastX = 0;
@@ -113,7 +114,7 @@ int main(int argc, char **argv) {
     glutInitWindowPosition(50, 25);
 
     //Configure Window Size
-    glutInitWindowSize(handler.getWindowWidth(),handler.getWindowHeight());
+    glutInitWindowSize(handler.getWindowWidth(), handler.getWindowHeight());
 
     //Create Window
     glutCreateWindow("raytracer");

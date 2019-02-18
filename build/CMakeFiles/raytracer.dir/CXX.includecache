@@ -19,6 +19,8 @@ GL/glut.h
 -
 handler.hpp
 /home/thomas/projects/raytracer/handler.hpp
+iostream
+-
 
 /home/thomas/projects/raytracer/ray.hpp
 cmath
